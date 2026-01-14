@@ -1,12 +1,24 @@
 package ru.job4j.ood.isp.menu;
 
-/**
- * 6. Создайте простенький класс TodoApp. Этот класс будет представлять собой консольное приложение, которое позволяет:
- * Добавить элемент в корень меню;
- * Добавить элемент к родительскому элементу;
- * Вызвать действие, привязанное к пункту меню (действие можно сделать константой,
- * например, ActionDelete DEFAULT_ACTION = () -> System.out.println("Some action") и указывать при добавлении элемента в меню);
- * Вывести меню в консоль.
- */
 public class TodoApp {
+
+    private Menu menu;
+    private Printer printer;
+
+    public TodoApp(Menu menu, Printer printer) {
+        this.menu = menu;
+        this.printer = printer;
+    }
+
+    public void addToRoot(String parentName, String childName, ActionDelegate actionDelegate) {
+        menu.add(parentName, childName, actionDelegate);
+    }
+
+    public void getActionDelegate(String itemName) {
+        menu.select(itemName).ifPresent(Menu.MenuItemInfo::getActionDelegate);
+    }
+
+    public void printedMenu() {
+        printer.print(menu);
+    }
 }
